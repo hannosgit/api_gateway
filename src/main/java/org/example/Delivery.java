@@ -1,4 +1,4 @@
 package org.example;
 
-public record Delivery(String name, int price) {
+public record Delivery(long deliveryId, String restaurantName, String deliveryDate, int totalItems) {
 }

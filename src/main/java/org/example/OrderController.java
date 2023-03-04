@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/order")
 public class OrderController {
 
-    private final DeliveryService deliveryService;
+    private final OrderService orderService;
 
-    public OrderController(DeliveryService deliveryService) {
-        this.deliveryService = deliveryService;
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
     }
 
-    @GetMapping("/{id}")
-    public Delivery getOrderById(@PathVariable long id) {
-        return deliveryService.fetchDelivery(id);
+    @GetMapping("/{orderId}")
+    public OrderDetails getOrderById(@PathVariable long orderId) {
+        return orderService.fetchOrderDetails(orderId);
     }
 
 }
