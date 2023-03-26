@@ -16,17 +16,17 @@ public class OrderService {
 
     private final AuthService authService;
 
-    private final ExecutorService virtualThreadExecutor;
+    private final ExecutorService executorService;
 
-    public OrderService(AccountingService accountingService, DeliveryService deliveryService, AuthService authService, ExecutorService virtualThreadExecutor) {
+    public OrderService(AccountingService accountingService, DeliveryService deliveryService, AuthService authService, ExecutorService executorService) {
         this.accountingService = accountingService;
         this.deliveryService = deliveryService;
         this.authService = authService;
-        this.virtualThreadExecutor = virtualThreadExecutor;
+        this.executorService = executorService;
     }
 
     public OrderDetails fetchOrderDetails(long orderId, ApiCredentials apiCredentials) {
-        final Future<String> tokenFuture = virtualThreadExecutor.submit(() -> this.authService.fetchToken(apiCredentials));
+        final Future<String> tokenFuture = executorService.submit(() -> this.authService.fetchToken(apiCredentials));
 
         final String token;
         try {

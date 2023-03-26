@@ -24,7 +24,6 @@ public class DeliveryService {
         this.jsonMapper = jsonMapper;
         this.httpClient = HttpClient
                 .newBuilder()
-                //.executor(Executors.newVirtualThreadPerTaskExecutor())
                 .build();
     }
 
