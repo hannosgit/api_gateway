@@ -25,9 +25,8 @@ public class OrderService {
         this.virtualThreadExecutor = virtualThreadExecutor;
     }
 
-
-    public OrderDetails fetchOrderDetails(long orderId, String username, String password) {
-        final Future<String> tokenFuture = virtualThreadExecutor.submit(() -> this.authService.fetchToken(username, password));
+    public OrderDetails fetchOrderDetails(long orderId, ApiCredentials apiCredentials) {
+        final Future<String> tokenFuture = virtualThreadExecutor.submit(() -> this.authService.fetchToken(apiCredentials));
 
         final String token;
         try {

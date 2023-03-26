@@ -35,7 +35,6 @@ public class DeliveryService {
 
         return retryTemplate.execute((c) -> {
             try {
-
                 final HttpResponse<String> send = this.httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
                 return jsonMapper.readValue(send.body(), Delivery.class);

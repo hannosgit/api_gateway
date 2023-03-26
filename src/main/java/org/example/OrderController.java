@@ -2,18 +2,16 @@ package org.example;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-
 @RestController
 @RequestMapping("/order")
 public class OrderController {
 
-    private static final Base64.Decoder DECODER = Base64.getDecoder();
+    private final HeaderService headerService;
 
     private final OrderService orderService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(HeaderService headerService, OrderService orderService) {
+        this.headerService = headerService;
         this.orderService = orderService;
     }
 
@@ -26,15 +24,9 @@ public class OrderController {
 
     @GetMapping("/{orderId}")
     public OrderDetails getOrderById(@PathVariable long orderId, @RequestHeader("Authorization") String authorization) {
-        final String basic = authorization.substring("Basic".length()).trim();
-        final byte[] credDecoded = DECODER.decode(basic);
-        final String credentials = new String(credDecoded, StandardCharsets.UTF_8);
+        final ApiCredentials credentials = headerService.parseAuthorizationHeader(authorization);
 
-        final String[] split = credentials.split(":");
-        final String username = split[0];
-        final String password = split[1];
-
-        return orderService.fetchOrderDetails(orderId, username, password);
+        return orderService.fetchOrderDetails(orderId, credentials);
     }
 
 }
