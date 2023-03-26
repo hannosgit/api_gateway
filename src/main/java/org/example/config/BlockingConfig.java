@@ -13,7 +13,7 @@ public class BlockingConfig {
 
     @Bean
     public ExecutorService executorService(){
-        return Executors.newWorkStealingPool(50);
+        return Executors.newCachedThreadPool();
     }
 
 }

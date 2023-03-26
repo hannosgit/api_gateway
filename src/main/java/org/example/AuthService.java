@@ -2,6 +2,7 @@ package org.example;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import org.example.data.ApiCredentials;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 

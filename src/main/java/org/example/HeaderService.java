@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.data.ApiCredentials;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.data;
 
 public record BillInfo(long billId, int totalPrice, long accountId, String firstName, String lastName, String address) {
 }
