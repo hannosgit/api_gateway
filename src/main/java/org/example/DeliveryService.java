@@ -14,23 +14,24 @@ import java.net.http.HttpResponse;
 @Service
 public class DeliveryService {
 
-    private static final String DELIVERY_SERVICE_URL = "http://localhost:3000/delivery/";
     private final RetryTemplate retryTemplate;
     private final JsonMapper jsonMapper;
     private final HttpClient httpClient;
+    private final URI uri;
 
 
-    public DeliveryService(RetryTemplate retryTemplate, JsonMapper jsonMapper) {
+    public DeliveryService(RetryTemplate retryTemplate, JsonMapper jsonMapper, ServiceAddressConfigProperty serviceAddressConfigProperty) {
         this.retryTemplate = retryTemplate;
         this.jsonMapper = jsonMapper;
         this.httpClient = HttpClient
                 .newBuilder()
                 .build();
+        this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.address() + "/delivery/");
     }
 
 
     public Delivery fetchDeliveryForOrderId(long orderId, String token) {
-        final URI uri = URI.create(DELIVERY_SERVICE_URL).resolve(String.valueOf(orderId));
+        final URI uri = this.uri.resolve(String.valueOf(orderId));
         final HttpRequest httpRequest = HttpRequest.newBuilder(uri).header("Authorization", "Authorization: Bearer " + token).GET().build();
 
         return retryTemplate.execute((c) -> {

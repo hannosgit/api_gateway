@@ -14,17 +14,18 @@ import java.net.http.HttpResponse;
 
 @Service
 public class AuthService {
-    private static final URI AUTHENTICATION_URI = URI.create("http://localhost:3000/auth/authenticate");
     private final RetryTemplate retryTemplate;
     private final JsonMapper jsonMapper;
     private final HttpClient httpClient;
+    private final URI uri;
 
-    public AuthService(RetryTemplate retryTemplate, JsonMapper jsonMapper) {
+    public AuthService(RetryTemplate retryTemplate, JsonMapper jsonMapper, ServiceAddressConfigProperty serviceAddressConfigProperty) {
         this.retryTemplate = retryTemplate;
         this.jsonMapper = jsonMapper;
         this.httpClient = HttpClient
                 .newBuilder()
                 .build();
+        this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.address() + "/auth/authenticate");
     }
 
     public String fetchToken(ApiCredentials apiCredentials) {
@@ -33,7 +34,7 @@ public class AuthService {
 
     public String fetchToken(String username, String password) {
         final var authRequest = buildRequest(username, password);
-        final HttpRequest httpRequest = HttpRequest.newBuilder(AUTHENTICATION_URI).POST(HttpRequest.BodyPublishers.ofString(authRequest)).build();
+        final HttpRequest httpRequest = HttpRequest.newBuilder(this.uri).POST(HttpRequest.BodyPublishers.ofString(authRequest)).build();
 
         return retryTemplate.execute((c) -> {
             try {

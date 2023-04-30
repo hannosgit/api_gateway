@@ -13,23 +13,24 @@ import java.net.http.HttpResponse;
 
 @Service
 public class AccountingService {
-    private static final URI ACCOUNT_SERVICE_URI = java.net.URI.create("http://localhost:3000/bill/");
     private final JsonMapper jsonMapper;
     private final HttpClient httpClient;
     private final RetryTemplate retryTemplate;
+    private final URI uri;
 
-    public AccountingService(JsonMapper jsonMapper, RetryTemplate retryTemplate) {
+    public AccountingService(JsonMapper jsonMapper, RetryTemplate retryTemplate, ServiceAddressConfigProperty serviceAddressConfigProperty) {
         this.jsonMapper = jsonMapper;
         this.retryTemplate = retryTemplate;
         this.httpClient = HttpClient
                 .newBuilder()
                 .build();
+        this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.address() + "/bill/");
     }
 
     public BillInfo fetchBillInfoForOrder(long orderId, String token) {
         return retryTemplate.execute((context) -> {
             try {
-                final URI uri = ACCOUNT_SERVICE_URI.resolve(String.valueOf(orderId));
+                final URI uri = this.uri.resolve(String.valueOf(orderId));
                 final HttpRequest httpRequest = HttpRequest.newBuilder(uri).header("Authorization", "Authorization: Bearer " + token).GET().build();
                 final HttpResponse<String> send = this.httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
