@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.common.ApiCredentials;
+import org.example.common.HeaderService;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -2,6 +2,7 @@ package org.example;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.example.common.Delivery;
+import org.example.common.ServiceAddressConfigProperty;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 
