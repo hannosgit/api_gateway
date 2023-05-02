@@ -30,7 +30,6 @@ public class AccountingService {
         final URI uri = this.uri.resolve(String.valueOf(orderId));
         final HttpRequest httpRequest = HttpRequest.newBuilder(uri).header("Authorization", "Authorization: Bearer " + token).GET().build();
 
-        // TODO add retry
         return this.httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.ofString()).thenApply(this::readBillInfoJson);
     }
 
