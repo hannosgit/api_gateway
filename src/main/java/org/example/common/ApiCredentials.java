@@ -1,4 +1,4 @@
-package org.example.data;
+package org.example.common;
 
 /**
  * The credentials for the order API

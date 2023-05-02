@@ -1,7 +1,7 @@
 package org.example;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import org.example.data.Delivery;
+import org.example.common.Delivery;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Service;
 

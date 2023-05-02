@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.data.ApiCredentials;
+import org.example.common.ApiCredentials;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
