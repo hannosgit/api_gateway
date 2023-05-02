@@ -41,7 +41,7 @@ public class DeliveryService {
 
                 return jsonMapper.readValue(send.body(), Delivery.class);
             } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
+                throw new FetchException(e);
             }
         });
     }
