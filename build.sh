@@ -1,1 +1,1 @@
-docker build -t hannes/api-gw:v1 .
+docker build -t hannes/api-gw-blocking:v1 .
