@@ -51,7 +51,9 @@
                 <configuration>
                     <release>20</release>
                     <compilerArgs>
-                        --enable-preview
+                        <arg>--enable-preview</arg>
+                        <arg>--add-modules</arg>
+                        <arg>jdk.incubator.concurrent</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
