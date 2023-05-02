@@ -23,7 +23,7 @@ public class AccountingService {
         this.httpClient = HttpClient
                 .newBuilder()
                 .build();
-        this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.address() + "/bill/");
+        this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.bill() + "/bill/");
     }
 
     public CompletableFuture<BillInfo> fetchBillInfoForOrder(long orderId, String token) {

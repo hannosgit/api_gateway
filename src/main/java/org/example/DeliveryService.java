@@ -25,7 +25,7 @@ public class DeliveryService {
         this.httpClient = HttpClient
                 .newBuilder()
                 .build();
-        this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.address() + "/delivery/");
+        this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.delivery() + "/delivery/");
     }
 
 
