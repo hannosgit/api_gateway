@@ -1,12 +1,12 @@
 package org.example;
 
-import jdk.incubator.concurrent.StructuredTaskScope;
 import org.example.common.ApiCredentials;
 import org.example.common.BillInfo;
 import org.example.common.Delivery;
 import org.example.common.OrderDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -26,20 +26,16 @@ public class OrderService {
     }
 
     public OrderDetails fetchOrderDetails(long orderId, ApiCredentials apiCredentials) {
-        final String token = this.authService.fetchToken(apiCredentials);
+        try {
+            final String token = this.authService.fetchToken(apiCredentials);
 
-        try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
-            final Future<Delivery> deliveryFuture = scope.fork(() -> this.deliveryService.fetchDeliveryForOrderId(orderId, token));
-            final Future<BillInfo> billInfoFuture = scope.fork(() -> this.accountingService.fetchBillInfoForOrder(orderId, token));
+            final CompletableFuture<Delivery> deliveryFuture = this.deliveryService.fetchDeliveryForOrderId(orderId, token);
+            final Future<BillInfo> billInfoFuture = this.accountingService.fetchBillInfoForOrder(orderId, token);
 
-            scope.join();
-            scope.throwIfFailed();
-
-            return new OrderDetails(orderId, deliveryFuture.resultNow(), billInfoFuture.resultNow());
-        } catch (InterruptedException | ExecutionException e) {
-            throw new FetchException(e);
+            return new OrderDetails(orderId, deliveryFuture.get(), billInfoFuture.get());
+        } catch (ExecutionException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
-
 
 }
