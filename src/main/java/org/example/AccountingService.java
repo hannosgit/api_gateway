@@ -25,7 +25,7 @@ public class AccountingService {
         this.httpClient = HttpClient
                 .newBuilder()
                 .build();
-        this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.address() + "/bill/");
+        this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.bill() + "/bill/");
     }
 
     public BillInfo fetchBillInfoForOrder(long orderId, String token) {

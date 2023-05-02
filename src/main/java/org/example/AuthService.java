@@ -26,7 +26,7 @@ public class AuthService {
         this.httpClient = HttpClient
                 .newBuilder()
                 .build();
-        this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.address() + "/auth/authenticate");
+        this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.auth() + "/auth/authenticate");
     }
 
     public String fetchToken(ApiCredentials apiCredentials) {
