@@ -12,5 +12,4 @@ public class JsonConfig {
         return JsonMapper.builder().build();
     }
 
-
 }
