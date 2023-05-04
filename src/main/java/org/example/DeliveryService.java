@@ -10,7 +10,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 @Service
 public class DeliveryService {
@@ -29,7 +29,7 @@ public class DeliveryService {
     }
 
 
-    public CompletableFuture<Delivery> fetchDeliveryForOrderId(long orderId, String token) {
+    public Future<Delivery> fetchDeliveryForOrderId(long orderId, String token) {
         final URI uri = this.uri.resolve(String.valueOf(orderId));
         final HttpRequest httpRequest = HttpRequest.newBuilder(uri).header("Authorization", "Authorization: Bearer " + token).GET().build();
 

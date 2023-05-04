@@ -6,8 +6,8 @@ import org.example.common.Delivery;
 import org.example.common.OrderDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 @Service
 public class OrderService {
@@ -28,8 +28,8 @@ public class OrderService {
         try {
             final String token = this.authService.fetchToken(apiCredentials);
 
-            final CompletableFuture<Delivery> deliveryFuture = this.deliveryService.fetchDeliveryForOrderId(orderId, token);
-            final CompletableFuture<BillInfo> billInfoFuture = this.accountingService.fetchBillInfoForOrder(orderId, token);
+            final Future<Delivery> deliveryFuture = this.deliveryService.fetchDeliveryForOrderId(orderId, token);
+            final Future<BillInfo> billInfoFuture = this.accountingService.fetchBillInfoForOrder(orderId, token);
 
             return new OrderDetails(orderId, deliveryFuture.get(), billInfoFuture.get());
         } catch (ExecutionException | InterruptedException e) {
