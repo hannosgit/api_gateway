@@ -1,5 +1,6 @@
 package org.example;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.example.common.BillInfo;
 import org.example.common.ServiceAddressConfigProperty;
@@ -31,9 +32,18 @@ public class AccountingService {
             final HttpRequest httpRequest = HttpRequest.newBuilder(uri).header("Authorization", "Authorization: Bearer " + token).GET().build();
             final HttpResponse<String> send = this.httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-            return jsonMapper.readValue(send.body(), BillInfo.class);
+            return readBillInfoJson(send);
         } catch (IOException | InterruptedException e) {
             throw new FetchException(e);
         }
     }
+
+    private BillInfo readBillInfoJson(HttpResponse<String> stringHttpResponse) {
+        try {
+            return jsonMapper.readValue(stringHttpResponse.body(), BillInfo.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
