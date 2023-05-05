@@ -8,8 +8,10 @@ server:
   tomcat:
     threads:
       max: 10000
-    max-connections: 10000
-    accept-count: 10000
+      min-spare: 100
+    max-connections: 100000
+    accept-count: 100000
+
 
 service:
   address:
