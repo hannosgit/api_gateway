@@ -10,5 +10,5 @@ service:
 
 server:
   tomcat:
-    max-connections: 10000
-    accept-count: 10000
+    max-connections: 100000
+    accept-count: 100000
