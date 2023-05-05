@@ -7,3 +7,8 @@ service:
     auth: 'localhost:3000'
     bill: 'localhost:3000'
     delivery: 'localhost:3000'
+
+server:
+  tomcat:
+    max-connections: 10000
+    accept-count: 10000
