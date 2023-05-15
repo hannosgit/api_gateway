@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.net.http.HttpClient;
+
 @Configuration
 public class JsonConfig {
 
@@ -12,4 +14,10 @@ public class JsonConfig {
         return JsonMapper.builder().build();
     }
 
+    @Bean
+    public HttpClient httpClient(){
+        return HttpClient
+                .newBuilder()
+                .build();
+    }
 }

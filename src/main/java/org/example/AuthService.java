@@ -18,11 +18,9 @@ public class AuthService {
     private final HttpClient httpClient;
     private final URI uri;
 
-    public AuthService(JsonMapper jsonMapper, ServiceAddressConfigProperty serviceAddressConfigProperty) {
+    public AuthService(JsonMapper jsonMapper, HttpClient httpClient, ServiceAddressConfigProperty serviceAddressConfigProperty) {
         this.jsonMapper = jsonMapper;
-        this.httpClient = HttpClient
-                .newBuilder()
-                .build();
+        this.httpClient = httpClient;
         this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.auth() + "/auth/authenticate");
     }
 

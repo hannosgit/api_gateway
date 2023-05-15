@@ -4,13 +4,13 @@ logging:
     #org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler: OFF
     #org.springframework.web.HttpLogging: OFF
 
-server:
-  tomcat:
-    threads:
-      max: 10000
-      min-spare: 100
-    max-connections: 100000
-    accept-count: 100000
+#server:
+#  tomcat:
+#    threads:
+#      max: 10000
+#      min-spare: 100
+#    max-connections: 100000
+#    accept-count: 100000
 
 
 service:

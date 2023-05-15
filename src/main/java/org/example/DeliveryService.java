@@ -20,11 +20,9 @@ public class DeliveryService {
     private final URI uri;
 
 
-    public DeliveryService(JsonMapper jsonMapper, ServiceAddressConfigProperty serviceAddressConfigProperty) {
+    public DeliveryService(JsonMapper jsonMapper, HttpClient httpClient, ServiceAddressConfigProperty serviceAddressConfigProperty) {
         this.jsonMapper = jsonMapper;
-        this.httpClient = HttpClient
-                .newBuilder()
-                .build();
+        this.httpClient = httpClient;
         this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.delivery() + "/delivery/");
     }
 
@@ -33,12 +31,14 @@ public class DeliveryService {
         final URI uri = this.uri.resolve(String.valueOf(orderId));
         final HttpRequest httpRequest = HttpRequest.newBuilder(uri).header("Authorization", "Authorization: Bearer " + token).GET().build();
 
-        return this.httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.ofString()).thenApply(this::readDeliveryJson);
+        return this.httpClient.sendAsync(httpRequest, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenApply(this::readDeliveryJson);
     }
 
-    private Delivery readDeliveryJson(HttpResponse<String> stringHttpResponse) {
+    private Delivery readDeliveryJson(String stringHttpResponse) {
         try {
-            return jsonMapper.readValue(stringHttpResponse.body(), Delivery.class);
+            return jsonMapper.readValue(stringHttpResponse, Delivery.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
