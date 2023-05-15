@@ -20,11 +20,9 @@ public class DeliveryService {
     private final URI uri;
 
 
-    public DeliveryService(JsonMapper jsonMapper, ServiceAddressConfigProperty serviceAddressConfigProperty) {
+    public DeliveryService(JsonMapper jsonMapper, HttpClient httpClient, ServiceAddressConfigProperty serviceAddressConfigProperty) {
         this.jsonMapper = jsonMapper;
-        this.httpClient = HttpClient
-                .newBuilder()
-                .build();
+        this.httpClient = httpClient;
         this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.delivery() + "/delivery/");
     }
 
