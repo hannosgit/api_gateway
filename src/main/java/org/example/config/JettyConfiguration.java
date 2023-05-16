@@ -13,10 +13,10 @@ public class JettyConfiguration implements WebServerFactoryCustomizer<JettyServl
     @Override
     public void customize(JettyServletWebServerFactory factory) {
         // customize your thread pool here
-        QueuedThreadPool qtp = new QueuedThreadPool(1_000_000, 1);
-        qtp.setName("jettyThreadPool");
-        qtp.setVirtualThreadsExecutor(Executors.newVirtualThreadPerTaskExecutor());
+        QueuedThreadPool threadPool = new QueuedThreadPool(200, 10);
+        threadPool.setName("jettyThreadPool");
+        threadPool.setVirtualThreadsExecutor(Executors.newVirtualThreadPerTaskExecutor());
 
-        factory.setThreadPool(qtp);
+        factory.setThreadPool(threadPool);
     }
 }
