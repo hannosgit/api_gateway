@@ -22,9 +22,7 @@ public class DeliveryService {
 
     public DeliveryService(JsonMapper jsonMapper, ServiceAddressConfigProperty serviceAddressConfigProperty) {
         this.jsonMapper = jsonMapper;
-        this.httpClient = HttpClient // important for performance: 1 client per service
-                .newBuilder()
-                .build();
+        this.httpClient = HttpClient.newHttpClient(); // important for performance: 1 client per service
         this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.delivery() + "/delivery/");
     }
 

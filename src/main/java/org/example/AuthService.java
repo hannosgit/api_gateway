@@ -20,9 +20,7 @@ public class AuthService {
 
     public AuthService(JsonMapper jsonMapper,  ServiceAddressConfigProperty serviceAddressConfigProperty) {
         this.jsonMapper = jsonMapper;
-        this.httpClient = HttpClient // important for performance: 1 client per service
-                .newBuilder()
-                .build();
+        this.httpClient = HttpClient.newHttpClient(); // important for performance: 1 client per service
         this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.auth() + "/auth/authenticate");
     }
 
