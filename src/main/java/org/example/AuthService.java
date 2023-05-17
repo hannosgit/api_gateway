@@ -18,9 +18,9 @@ public class AuthService {
     private final HttpClient httpClient;
     private final URI uri;
 
-    public AuthService(JsonMapper jsonMapper, HttpClient httpClient, ServiceAddressConfigProperty serviceAddressConfigProperty) {
+    public AuthService(JsonMapper jsonMapper,  ServiceAddressConfigProperty serviceAddressConfigProperty) {
         this.jsonMapper = jsonMapper;
-        this.httpClient = httpClient;
+        this.httpClient = HttpClient.newHttpClient(); // important for performance: 1 client per service
         this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.auth() + "/auth/authenticate");
     }
 

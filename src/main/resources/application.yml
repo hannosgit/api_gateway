@@ -1,14 +1,20 @@
 logging:
   level:
     root: INFO
+    #org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler: OFF
+    #org.springframework.web.HttpLogging: OFF
+
+#server:
+#  tomcat:
+#    threads:
+#      max: 10000
+#      min-spare: 100
+#    max-connections: 100000
+#    accept-count: 100000
+
 
 service:
   address:
     auth: 'localhost:3000'
     bill: 'localhost:3000'
     delivery: 'localhost:3000'
-
-server:
-  tomcat:
-    max-connections: 100000
-    accept-count: 100000
