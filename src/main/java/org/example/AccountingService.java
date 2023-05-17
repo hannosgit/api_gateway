@@ -18,9 +18,11 @@ public class AccountingService {
     private final HttpClient httpClient;
     private final URI uri;
 
-    public AccountingService(JsonMapper jsonMapper, HttpClient httpClient, ServiceAddressConfigProperty serviceAddressConfigProperty) {
+    public AccountingService(JsonMapper jsonMapper, ServiceAddressConfigProperty serviceAddressConfigProperty) {
         this.jsonMapper = jsonMapper;
-        this.httpClient = httpClient;
+        this.httpClient = HttpClient // important for performance: 1 client per service
+                .newBuilder()
+                .build();
         this.uri = java.net.URI.create("http://" + serviceAddressConfigProperty.bill() + "/bill/");
     }
 
